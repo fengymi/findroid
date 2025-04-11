@@ -26,9 +26,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -52,6 +52,7 @@ fun UsersScreen(
     onChangeServerClick: () -> Unit,
     onAddClick: () -> Unit,
     onBackClick: () -> Unit,
+    onPublicUserClick: (String) -> Unit,
     showBack: Boolean = true,
     viewModel: UsersViewModel = hiltViewModel(),
 ) {
@@ -75,6 +76,7 @@ fun UsersScreen(
                 is UsersAction.OnChangeServerClick -> onChangeServerClick()
                 is UsersAction.OnAddClick -> onAddClick()
                 is UsersAction.OnBackClick -> onBackClick()
+                is UsersAction.OnPublicUserClick -> onPublicUserClick(action.username)
                 else -> Unit
             }
             viewModel.onAction(action)
@@ -117,7 +119,7 @@ private fun UsersScreenLayout(
                 style = MaterialTheme.typography.titleMedium,
             )
             Spacer(modifier = Modifier.height(24.dp))
-            if (state.users.isEmpty()) {
+            if (state.users.isEmpty() && state.publicUsers.isEmpty()) {
                 Text(
                     text = stringResource(SetupR.string.users_no_users),
                     style = MaterialTheme.typography.bodyMedium,
@@ -141,6 +143,18 @@ private fun UsersScreenLayout(
                                 selectedUser = user
                                 openDeleteDialog = true
                             },
+                        )
+                    }
+                    items(state.publicUsers) { user ->
+                        UserItem(
+                            name = user.name,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .alpha(0.7f),
+                            onClick = {
+                                onAction(UsersAction.OnPublicUserClick(username = user.name))
+                            },
+                            onLongClick = {},
                         )
                     }
                 }
@@ -207,7 +221,6 @@ private fun UsersScreenLayout(
 }
 
 @PreviewScreenSizes
-@Preview
 @Composable
 private fun UsersScreenLayoutPreview() {
     FindroidTheme {
@@ -217,6 +230,13 @@ private fun UsersScreenLayoutPreview() {
                     User(
                         id = UUID.randomUUID(),
                         name = "Bob",
+                        serverId = "",
+                    ),
+                ),
+                publicUsers = listOf(
+                    User(
+                        id = UUID.randomUUID(),
+                        name = "Alice",
                         serverId = "",
                     ),
                 ),
