@@ -21,8 +21,8 @@ android {
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
 
-        versionCode = Versions.appCode
-        versionName = Versions.appName
+        versionName = project.getVersionName(Versions.appName)
+        versionCode = getVersionCode(versionName!!)
 
         testInstrumentationRunner = "dev.jdtech.jellyfin.HiltTestRunner"
     }
