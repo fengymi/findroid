@@ -54,10 +54,11 @@ jobs:
           FINDROID_KEY_PASSWORD: ${{ secrets.FINDROID_KEY_PASSWORD }}
 #          FINDROID_PLAY_API_CREDENTIALS: ${{ steps.findroid_play_api_credentials.outputs.filePath }}
 
-      - name: Create release
-        uses: softprops/action-gh-release@v2
+      - name: Publish release
+        uses: svenstaro/upload-release-action@v2
         with:
-          draft: true
+          tag: ${{ github.ref }}
+          release_name: '${{ github.ref_name }}'
           files: |
             ./app/phone/build/outputs/apk/libre/release/findroid-${{ github.ref_name }}-libre-arm64-v8a.apk
             ./app/phone/build/outputs/apk/libre/release/findroid-${{ github.ref_name }}-libre-armeabi-v7a.apk
