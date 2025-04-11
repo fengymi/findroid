@@ -3,4 +3,5 @@
     <string name="continue_watching">继续观看</string>
     <string name="next_up">接下来</string>
     <string name="latest_library">最新%1$s</string>
+    <string name="search_placeholder">搜索电影和节目</string>
 </resources>

@@ -16,8 +16,10 @@ android {
     compileSdk = Versions.compileSdk
     buildToolsVersion = Versions.buildTools
 
+    val selfAppId = "dev.fengymi.jdtech.jellyfin"
+
     defaultConfig {
-        applicationId = "dev.jdtech.jellyfin"
+        applicationId = selfAppId
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
 
@@ -153,4 +155,10 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose)
+
+    // bilibili 弹幕
+    implementation(libs.danmaku.render.engine)
+    implementation(libs.danmaku.render.engine.ndk.armv7a)
+    implementation(libs.danmaku.render.engine.ndk.x86)
+    implementation(libs.danmaku.render.engine.ndk.armv5)
 }

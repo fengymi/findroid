@@ -19,6 +19,7 @@ import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.jdtech.jellyfin.customer.danmu.SimpleDanmuController
 import dev.jdtech.jellyfin.models.FindroidSegment
 import dev.jdtech.jellyfin.models.PlayerChapter
 import dev.jdtech.jellyfin.models.PlayerItem
@@ -27,6 +28,7 @@ import dev.jdtech.jellyfin.mpv.MPVPlayer
 import dev.jdtech.jellyfin.player.video.R
 import dev.jdtech.jellyfin.repository.JellyfinRepository
 import dev.jdtech.jellyfin.settings.domain.AppPreferences
+import dev.jdtech.jellyfin.settings.domain.DanmuPreferences
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -39,6 +41,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import master.flame.danmaku.ui.widget.DanmakuView
 import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
@@ -51,6 +54,7 @@ constructor(
     private val application: Application,
     private val jellyfinRepository: JellyfinRepository,
     private val appPreferences: AppPreferences,
+    private val danmuPreferences: DanmuPreferences,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel(), Player.Listener {
     val player: Player
@@ -84,6 +88,7 @@ constructor(
     private var currentMediaItemIndex = savedStateHandle["mediaItemIndex"] ?: 0
     private var playbackPosition: Long = savedStateHandle["position"] ?: 0
     private var currentSegments: List<FindroidSegment> = emptyList()
+    private var simpleDanmuController: SimpleDanmuController? = null
 
     var playbackSpeed: Float = 1f
 
@@ -134,11 +139,21 @@ constructor(
         }
     }
 
+    fun createDanmuControllerListener(danmuView: DanmakuView): SimpleDanmuController {
+        simpleDanmuController = SimpleDanmuController(danmuView, danmuPreferences, player, jellyfinRepository)
+        return simpleDanmuController as SimpleDanmuController
+    }
+
     fun initializePlayer(
         items: Array<PlayerItem>,
     ) {
         this.items = items
         player.addListener(this)
+        // 添加弹幕回调信息
+        if (simpleDanmuController != null) {
+            player.addListener(simpleDanmuController!!)
+            simpleDanmuController!!.setItems(items)
+        }
 
         viewModelScope.launch {
             val mediaItems = mutableListOf<MediaItem>()
@@ -211,6 +226,11 @@ constructor(
         playbackPosition = 0L
         currentMediaItemIndex = 0
         player.removeListener(this)
+        if (simpleDanmuController != null) {
+            player.removeListener(simpleDanmuController!!)
+            simpleDanmuController!!.release()
+            simpleDanmuController = null
+        }
         player.release()
     }
 

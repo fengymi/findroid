@@ -14,6 +14,12 @@
         app:animation_enabled="false"
         app:show_buffering="always" />
 
+    <master.flame.danmaku.ui.widget.DanmakuView
+        android:id="@+id/danmuView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:use_controller="false" />
+
     <LinearLayout
         android:id="@+id/progress_scrubber_layout"
         android:layout_width="wrap_content"
@@ -185,4 +191,16 @@
         android:alpha="0"
         android:src="@drawable/transparent_circle"
         tools:ignore="ContentDescription" />
+
+    <FrameLayout
+        android:id="@+id/danmu_setting_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:visibility="gone">
+
+<!--        <include-->
+<!--            layout="@layout/danmu_setting_layout" />-->
+    </FrameLayout>
 </FrameLayout>

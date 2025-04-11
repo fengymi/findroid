@@ -48,4 +48,7 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.jellyfin.core)
+
+    // json
+    implementation(libs.alibaba.json)
 }

@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.jdtech.jellyfin.settings.domain.AppPreferences
+import dev.jdtech.jellyfin.settings.domain.DanmuPreferences
 import javax.inject.Singleton
 
 @Module
@@ -15,5 +16,11 @@ object AppPreferencesModule {
     @Provides
     fun provideAppPreferences(sp: SharedPreferences): AppPreferences {
         return AppPreferences(sp)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDanmuPreferences(sp: SharedPreferences): DanmuPreferences {
+        return DanmuPreferences(sp)
     }
 }

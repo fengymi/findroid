@@ -82,9 +82,13 @@ fun Modifier.handleDPadKeyEvents(
     onUp: (() -> Unit)? = null,
     onDown: (() -> Unit)? = null,
     onEnter: (() -> Unit)? = null,
+    onBack: (() -> Unit)? = null,
 ) = onKeyEvent {
     if (DPadEventsKeyCodes.contains(it.nativeKeyEvent.keyCode) && it.nativeKeyEvent.action == KeyEvent.ACTION_UP) {
         when (it.nativeKeyEvent.keyCode) {
+            KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_B -> {
+                onLeft?.invoke().also { return@onKeyEvent true }
+            }
             KeyEvent.KEYCODE_DPAD_LEFT, KeyEvent.KEYCODE_SYSTEM_NAVIGATION_LEFT -> {
                 onLeft?.invoke().also { return@onKeyEvent true }
             }

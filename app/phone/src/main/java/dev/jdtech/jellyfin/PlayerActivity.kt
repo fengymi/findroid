@@ -26,6 +26,7 @@ import android.widget.ImageView
 import android.widget.Space
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -42,6 +43,7 @@ import dev.jdtech.jellyfin.dialogs.TrackSelectionDialogFragment
 import dev.jdtech.jellyfin.models.FindroidSegment
 import dev.jdtech.jellyfin.models.FindroidSegmentType
 import dev.jdtech.jellyfin.settings.domain.AppPreferences
+import dev.jdtech.jellyfin.settings.domain.DanmuPreferences
 import dev.jdtech.jellyfin.utils.PlayerGestureHelper
 import dev.jdtech.jellyfin.utils.PreviewScrubListener
 import dev.jdtech.jellyfin.viewmodels.PlayerActivityViewModel
@@ -58,6 +60,9 @@ class PlayerActivity : BasePlayerActivity() {
 
     @Inject
     lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var danmuPreferences: DanmuPreferences;
 
     lateinit var binding: ActivityPlayerBinding
     private var playerGestureHelper: PlayerGestureHelper? = null
@@ -108,6 +113,7 @@ class PlayerActivity : BasePlayerActivity() {
                 }
             },
         )
+        val simpleDanmuController = viewModel.createDanmuControllerListener(binding.danmuView)
 
         val playerControls = binding.playerView.findViewById<View>(R.id.player_controls)
         val lockedControls = binding.playerView.findViewById<View>(R.id.locked_player_view)
@@ -139,6 +145,13 @@ class PlayerActivity : BasePlayerActivity() {
         val pipButton = binding.playerView.findViewById<ImageButton>(R.id.btn_pip)
         val lockButton = binding.playerView.findViewById<ImageButton>(R.id.btn_lockview)
         val unlockButton = binding.playerView.findViewById<ImageButton>(R.id.btn_unlock)
+
+        val danmuSwitch = binding.playerView.findViewById<ImageButton>(R.id.btn_danmu_switch)
+        if (danmuPreferences.isDanmuController) {
+            danmuSwitch.setImageDrawable(AppCompatResources.getDrawable(this.applicationContext, dev.jdtech.jellyfin.core.R.drawable.ic_danmu_open))
+        } else {
+            danmuSwitch.setImageDrawable(AppCompatResources.getDrawable(this.applicationContext, dev.jdtech.jellyfin.core.R.drawable.ic_danmu_close))
+        }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -207,6 +220,9 @@ class PlayerActivity : BasePlayerActivity() {
                                 speedButton.imageAlpha = 255
                                 pipButton.isEnabled = true
                                 pipButton.imageAlpha = 255
+
+                                danmuSwitch.isEnabled = true
+                                danmuSwitch.imageAlpha = 255
                             }
                         }
                     }
@@ -240,6 +256,9 @@ class PlayerActivity : BasePlayerActivity() {
 
         speedButton.isEnabled = false
         speedButton.imageAlpha = 75
+
+        danmuSwitch.isEnabled = false
+        danmuSwitch.imageAlpha = 75
 
         if (isPipSupported) {
             pipButton.isEnabled = false
@@ -286,6 +305,16 @@ class PlayerActivity : BasePlayerActivity() {
                 supportFragmentManager,
                 "speedselectiondialog",
             )
+        }
+
+        danmuSwitch.setOnClickListener {
+            danmuPreferences.isDanmuController = !danmuPreferences.isDanmuController;
+            if (danmuPreferences.isDanmuController) {
+                danmuSwitch.setImageDrawable(AppCompatResources.getDrawable(this.applicationContext, dev.jdtech.jellyfin.core.R.drawable.ic_danmu_open))
+            } else {
+                danmuSwitch.setImageDrawable(AppCompatResources.getDrawable(this.applicationContext, dev.jdtech.jellyfin.core.R.drawable.ic_danmu_close))
+            }
+            simpleDanmuController.resolveDanmakuShow()
         }
 
         pipButton.setOnClickListener {

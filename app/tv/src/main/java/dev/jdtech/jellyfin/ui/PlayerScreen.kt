@@ -185,6 +185,15 @@ fun PlayerScreen(
             modifier = Modifier
                 .fillMaxSize(),
         )
+//        AndroidView(
+//            factory = { context ->
+//                DanmakuView(context).also { danmakuView ->
+//                    val danmuControllerListener = DanmuControllerListener(danmakuView)
+//                    viewModel.player.addListener(danmuControllerListener)
+//                }
+//            },
+//            modifier = Modifier.fillMaxSize()
+//        )
         val focusRequester = remember { FocusRequester() }
         VideoPlayerOverlay(
             modifier = Modifier.align(Alignment.BottomCenter),
@@ -277,7 +286,9 @@ private fun Modifier.dPadEvents(
     onLeft = {},
     onRight = {},
     onUp = {},
-    onDown = {},
+    onDown = {
+        videoPlayerState.showControls()
+    },
     onEnter = {
         exoPlayer.pause()
         videoPlayerState.showControls()

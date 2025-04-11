@@ -1,6 +1,7 @@
 package dev.jdtech.jellyfin.api
 
 import android.content.Context
+import dev.jdtech.jellyfin.api.customer.danmuApi
 import dev.jdtech.jellyfin.data.BuildConfig
 import dev.jdtech.jellyfin.settings.domain.Constants
 import org.jellyfin.sdk.api.client.HttpClientOptions
@@ -65,6 +66,7 @@ class JellyfinApi(
     val userLibraryApi = api.userLibraryApi
     val videosApi = api.videosApi
     val viewsApi = api.userViewsApi
+    val danmuApi = api.danmuApi
 
     companion object {
         @Volatile

@@ -73,6 +73,9 @@ constructor(
     // Ofline mode
     val offlineMode = Preference("pref_offline_mode", false)
 
+    // 视频倍数
+    val videoSpeed = Preference("video_speed", 1.0f)
+
     inline fun <reified T> getValue(preference: Preference<T>): T {
         return try {
             when (preference.defaultValue) {
