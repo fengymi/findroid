@@ -25,6 +25,9 @@ jobs:
           java-version: 21
           distribution: temurin
 
+      - name: Set FINDROID_VERSION
+        run: echo "FINDROID_VERSION=$(echo ${GITHUB_REF#refs/tags/v} | tr / -)" >> $GITHUB_ENV
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 

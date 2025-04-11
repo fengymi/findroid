@@ -14,8 +14,8 @@ android {
     defaultConfig {
         minSdk = Versions.minSdk
 
-        buildConfigField("int", "VERSION_CODE", Versions.appCode.toString())
-        buildConfigField("String", "VERSION_NAME", "\"${Versions.appName}\"")
+        buildConfigField("int", "VERSION_CODE", getVersionCode(project.getVersionName(Versions.appName)).toString())
+        buildConfigField("String", "VERSION_NAME", "\"${project.getVersionName(Versions.appName)}\"")
 
         consumerProguardFile("proguard-rules.pro")
 
