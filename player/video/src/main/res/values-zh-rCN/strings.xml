@@ -18,4 +18,6 @@
     <string name="player_controls_picture_in_picture">进入画中画</string>
     <string name="none">无</string>
     <string name="player_controls_skip_credits">跳过片尾</string>
+
+    <string name="player_danmu_switch">关闭/显示弹幕</string>
 </resources>

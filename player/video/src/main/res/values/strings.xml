@@ -17,4 +17,6 @@
     <string name="player_controls_skip_forward">Skip forward</string>
     <string name="player_trickplay">Trickplay</string>
     <string name="player_controls_progress">Progress bar</string>
+
+    <string name="player_danmu_switch">Switch danmu show</string>
 </resources>

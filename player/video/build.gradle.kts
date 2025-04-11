@@ -57,4 +57,6 @@ dependencies {
     implementation(libs.danmaku.render.engine.ndk.armv7a)
     implementation(libs.danmaku.render.engine.ndk.x86)
     implementation(libs.danmaku.render.engine.ndk.armv5)
+
+    implementation(libs.alibaba.json)
 }
