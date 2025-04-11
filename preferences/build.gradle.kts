@@ -38,4 +38,8 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.media3.common)
     implementation(libs.hilt.android)
+
+    implementation(libs.timber)
+
+    implementation(libs.alibaba.json)
 }

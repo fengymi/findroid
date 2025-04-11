@@ -66,11 +66,12 @@ public abstract class AbstractDanmuControllerListener implements Player.Listener
 //
 //        }
         Timber.i("AbstractDanmuControllerListener onPositionDiscontinuity newPosition contentPositionMs=%d, reason=%d", newPosition.contentPositionMs, reason);
-        seekTo(newPosition.contentPositionMs);
+//        seekTo(newPosition.contentPositionMs);
     }
 
     @Override
     public void onPlayWhenReadyChanged(boolean playWhenReady, int reason) {
+        Timber.i("AbstractDanmuControllerListener onPlayWhenReadyChanged playWhenReady=%s, reason=%d", playWhenReady, reason);
         if (playWhenReady) {
             resume();
         } else {

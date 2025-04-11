@@ -19,7 +19,7 @@ import dev.jdtech.jellyfin.customer.CustomerCommonUtils;
 import dev.jdtech.jellyfin.data.BuildConfig;
 import dev.jdtech.jellyfin.models.PlayerItem;
 import dev.jdtech.jellyfin.repository.JellyfinRepository;
-import dev.jdtech.jellyfin.settings.domain.DanmuPreferences;
+import dev.jdtech.jellyfin.DanmuPreferences;
 import io.ktor.utils.io.ByteReadChannel;
 import master.flame.danmaku.controller.IDanmakuView;
 import master.flame.danmaku.danmaku.loader.ILoader;

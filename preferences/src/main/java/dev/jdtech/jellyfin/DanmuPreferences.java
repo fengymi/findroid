@@ -1,4 +1,4 @@
-package dev.jdtech.jellyfin.settings.domain;
+package dev.jdtech.jellyfin;
 
 import android.content.SharedPreferences;
 
@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-import org.jellyfin.sdk.model.api.BaseItemDto;
 import java.util.UUID;
 
 
@@ -97,14 +96,6 @@ public class DanmuPreferences {
     public void setDanmuController(boolean danmuController) {
         this.danmuController = danmuController;
         setValue(DAN_MU_CONTROLLER, danmuController);
-    }
-
-    public int getSeasonDanmuOffset(BaseItemDto baseItemDto) {
-        UUID seasonId = baseItemDto.getSeasonId();
-        if (seasonId == null) {
-            return 0;
-        }
-        return getSeasonDanmuOffset(seasonId.toString());
     }
 
     public int getSeasonDanmuOffset(String seasonId) {
