@@ -8,6 +8,7 @@ import java.util.UUID
 data class PlayerItem(
     val name: String,
     val itemId: UUID,
+    val seasonId: UUID?,
     val mediaSourceId: String,
     val playbackPosition: Long,
     val mediaSourceUri: String = "",

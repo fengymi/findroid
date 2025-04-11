@@ -13,8 +13,14 @@ plugins {
 
 allprojects {
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
+        maven("https://jitpack.io") {
+            content {
+                includeVersionByRegex("com.github.fengymi.*", ".*", ".*")
+            }
+        }
     }
 }
 

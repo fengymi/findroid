@@ -17,3 +17,17 @@ pluginManagement {
         google()
     }
 }
+
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+
+        maven("https://jitpack.io") {
+            content {
+                includeVersionByRegex("com.github.fengymi.*", ".*", ".*")
+            }
+        }
+    }
+}

@@ -118,4 +118,10 @@ dependencies {
     coreLibraryDesugaring(libs.android.desugar.jdk)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
+
+    // bilibili 弹幕
+    implementation(libs.danmaku.render.engine)
+    implementation(libs.danmaku.render.engine.ndk.armv7a)
+    implementation(libs.danmaku.render.engine.ndk.x86)
+    implementation(libs.danmaku.render.engine.ndk.armv5)
 }
