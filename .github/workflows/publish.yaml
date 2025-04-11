@@ -54,13 +54,21 @@ jobs:
           FINDROID_KEY_PASSWORD: ${{ secrets.FINDROID_KEY_PASSWORD }}
 #          FINDROID_PLAY_API_CREDENTIALS: ${{ steps.findroid_play_api_credentials.outputs.filePath }}
 
-      - name: Publish release
-        uses: svenstaro/upload-release-action@v2
+#      - name: Publish release
+#        uses: svenstaro/upload-release-action@v2
+#        with:
+#          repo_token: ${{ secrets.GITHUB_TOKEN }}
+#          tag: ${{ github.ref }}
+#          release_name: '${{ github.ref_name }}'
+#          files: |
+#            ./app/phone/build/outputs/apk/libre/release/findroid-${{ github.ref_name }}-libre-arm64-v8a.apk
+#            ./app/phone/build/outputs/apk/libre/release/findroid-${{ github.ref_name }}-libre-armeabi-v7a.apk
+#            ./app/phone/build/outputs/apk/libre/release/findroid-${{ github.ref_name }}-libre-x86_64.apk
+#            ./app/phone/build/outputs/apk/libre/release/findroid-${{ github.ref_name }}-libre-x86.apk
+
+      - name: Upload release archive to GitHub release
+        uses: alexellis/upload-assets@13926a61cdb2cb35f5fdef1c06b8b591523236d3 # 0.4.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: ${{ github.ref }}
-          release_name: '${{ github.ref_name }}'
-          files: |
-            ./app/phone/build/outputs/apk/libre/release/findroid-${{ github.ref_name }}-libre-arm64-v8a.apk
-            ./app/phone/build/outputs/apk/libre/release/findroid-${{ github.ref_name }}-libre-armeabi-v7a.apk
-            ./app/phone/build/outputs/apk/libre/release/findroid-${{ github.ref_name }}-libre-x86_64.apk
-            ./app/phone/build/outputs/apk/libre/release/findroid-${{ github.ref_name }}-libre-x86.apk
+          asset_paths: '["./app/phone/build/outputs/apk/libre/release/*"]'
