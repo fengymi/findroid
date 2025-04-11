@@ -183,6 +183,11 @@ class PlayerActivity : BasePlayerActivity() {
                                     binding.playerView.player?.seekTo((segment.endTime * 1000).toLong())
                                     skipSegmentButton.isVisible = false
                                 }
+
+                                // 自动点击跳转
+                                if (appPreferences.playerAutoIntroSkipper) {
+                                    skipSegmentButton.callOnClick();
+                                }
                             } ?: run {
                                 skipSegmentButton.isVisible = false
                             }

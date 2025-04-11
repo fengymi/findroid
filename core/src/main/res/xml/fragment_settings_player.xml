@@ -98,6 +98,13 @@
 
     <SwitchPreferenceCompat
         app:defaultValue="true"
+        app:key="pref_player_auto_intro_skipper"
+        app:summary="@string/pref_player_auto_intro_skipper"
+        app:title="@string/pref_player_intro_skipper"
+        app:widgetLayout="@layout/preference_material3_switch" />
+
+    <SwitchPreferenceCompat
+        app:defaultValue="true"
         app:key="pref_player_chapter_markers"
         app:summary="@string/pref_player_chapter_markers_summary"
         app:title="@string/pref_player_chapter_markers"

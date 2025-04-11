@@ -119,11 +119,14 @@ public class SimpleDanmuController extends AbstractDanmuControllerListener {
 
     @Override
     protected void changePlayerItem(PlayerItem playerItem) {
-        if (playerItem == this.playerItem) {
+        if (playerItem == null || playerItem == this.playerItem) {
             return;
         }
-
         this.playerItem = playerItem;
+
+        if (danmakuView.isPrepared()) {
+            danmakuView.stop();
+        }
         onPrepareDanmaku();
 
 //        this.countDownLatch = new CountDownLatch(2);

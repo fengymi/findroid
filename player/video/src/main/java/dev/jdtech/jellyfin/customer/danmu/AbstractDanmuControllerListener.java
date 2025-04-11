@@ -7,6 +7,11 @@ import androidx.media3.common.PlaybackException;
 import androidx.media3.common.Player;
 import androidx.media3.common.Timeline;
 
+import com.alibaba.fastjson.JSON;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import dev.jdtech.jellyfin.models.PlayerItem;
 import timber.log.Timber;
 
@@ -16,17 +21,31 @@ public abstract class AbstractDanmuControllerListener implements Player.Listener
             ,Player.EVENT_SEEK_FORWARD_INCREMENT_CHANGED
             ,Player.EVENT_MAX_SEEK_TO_PREVIOUS_POSITION_CHANGED
             ,Player.EVENT_POSITION_DISCONTINUITY
+            ,Player.EVENT_MEDIA_METADATA_CHANGED
     };
 
     private Player player;
     private boolean seek = false;
     @Override
     public void onEvents(@NonNull Player player, @NonNull Player.Events events) {
+        List<Integer> eventList = new ArrayList<>(events.size());
+        for (int i = 0; i < events.size(); i++) {
+            eventList.add(events.get(i));
+        }
         this.player = player;
-        Timber.i("AbstractDanmuControllerListener onEvents events.size=%d", events.size());
+        Timber.i("AbstractDanmuControllerListener onEvents events.size=%d, eventList=%s", events.size(), JSON.toJSONString(eventList));
         // 播放状态发生变化
         if (events.contains(Player.EVENT_IS_PLAYING_CHANGED)) {
 //            player.getPlaybackState()
+        }
+
+        // 触发第一帧渲染
+        if (events.contains(Player.EVENT_RENDERED_FIRST_FRAME)) {
+            MediaItem currentMediaItem = player.getCurrentMediaItem();
+            if (currentMediaItem != null) {
+                changePlayerItem(getItemById(currentMediaItem.mediaId));
+                seek = true;
+            }
         }
 
         if (events.containsAny(seekEvents)) {
@@ -73,6 +92,11 @@ public abstract class AbstractDanmuControllerListener implements Player.Listener
     public void onPlayWhenReadyChanged(boolean playWhenReady, int reason) {
         Timber.i("AbstractDanmuControllerListener onPlayWhenReadyChanged playWhenReady=%s, reason=%d", playWhenReady, reason);
         if (playWhenReady) {
+            if (seek) {
+                Timber.i("AbstractDanmuControllerListener onPlaybackStateChanged seek ContentPosition=%d, CurrentPosition=%d", player.getContentPosition(), player.getCurrentPosition());
+                seekTo(player.getCurrentPosition());
+                seek = false;
+            }
             resume();
         } else {
             pause();
@@ -95,12 +119,14 @@ public abstract class AbstractDanmuControllerListener implements Player.Listener
 
         // 开始播放
         if (playbackState == Player.STATE_READY) {
-            if (seek && player != null) {
-                Timber.i("AbstractDanmuControllerListener onPlaybackStateChanged seek ContentPosition=%d, CurrentPosition=%d", player.getContentPosition(), player.getCurrentPosition());
-                seekTo(player.getCurrentPosition());
-                seek = false;
+            if (player != null && player.isPlaying()) {
+                if (seek) {
+                    Timber.i("AbstractDanmuControllerListener onPlaybackStateChanged seek ContentPosition=%d, CurrentPosition=%d", player.getContentPosition(), player.getCurrentPosition());
+                    seekTo(player.getCurrentPosition());
+                    seek = false;
+                }
+                resume();
             }
-            resume();
         }
     }
 

@@ -38,8 +38,8 @@ public class DanmuPreferences {
         danmuStyle = sharedPreferences.getInt(DAN_MU_STYLE, 2);
         danmuRows = sharedPreferences.getInt(DAN_MU_ROWS, 5);
         danmuController = sharedPreferences.getBoolean(DAN_MU_CONTROLLER, true);
-        danmuSpeed = sharedPreferences.getFloat(DAN_MU_SPEED, 1.0f);
-        danmuFontSize = sharedPreferences.getFloat(DAN_MU_FONT_SIZE, 1.0f);
+        danmuSpeed = sharedPreferences.getFloat(DAN_MU_SPEED, 1.2f);
+        danmuFontSize = sharedPreferences.getFloat(DAN_MU_FONT_SIZE, 0.8f);
 
         try {
             seasonDanmuOffsetTimes = JSON.parseObject(sharedPreferences.getString(DAN_MU_OFFSET_TIME, "{}"));
