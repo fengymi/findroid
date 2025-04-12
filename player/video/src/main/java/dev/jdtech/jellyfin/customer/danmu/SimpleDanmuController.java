@@ -305,6 +305,10 @@ public class SimpleDanmuController extends AbstractDanmuControllerListener {
             danmuXmlFileById = repository.getDanmuXmlFileById(currentUUID, new HashSet<>());
         } catch (Exception e) {
             InvalidStatusException invalidStatusException = null;
+            if (e instanceof InvalidStatusException) {
+                invalidStatusException = (InvalidStatusException) e;
+            }
+
             if (e.getCause() instanceof InvalidStatusException) {
                 invalidStatusException = (InvalidStatusException) e.getCause();
             }
@@ -312,7 +316,8 @@ public class SimpleDanmuController extends AbstractDanmuControllerListener {
             if (invalidStatusException != null) {
                 int status = invalidStatusException.getStatus();
                 if (status >= 400 && status < 500) {
-                    CustomerCommonUtils.show(danmakuView.getView().getContext(), "该视频没有弹幕");
+                    Timber.i("当前视频没有弹幕，忽略");
+//                    CustomerCommonUtils.show(danmakuView.getView().getContext(), "该视频没有弹幕");
                 }
             } else {
                 CustomerCommonUtils.show(danmakuView.getView().getContext(), "获取弹幕失败:" + e.getMessage());
