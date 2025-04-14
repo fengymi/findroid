@@ -50,6 +50,14 @@ constructor(
     val playerGesturesSeekTrickplay get() = sharedPreferences.getBoolean(Constants.PREF_PLAYER_GESTURES_SEEK_TRICKPLAY, true)
     val playerGesturesChapterSkip get() = sharedPreferences.getBoolean(Constants.PREF_PLAYER_GESTURES_CHAPTER_SKIP, true)
 
+    var playerSpeed
+        get() = sharedPreferences.getFloat(Constants.PREF_PLAYER_SPEED, 1.0f)
+        set(value) {
+            sharedPreferences.edit {
+                putFloat(Constants.PREF_PLAYER_SPEED, value)
+            }
+        }
+
     val playerBrightnessRemember get() =
         sharedPreferences.getBoolean(Constants.PREF_PLAYER_BRIGHTNESS_REMEMBER, false)
 

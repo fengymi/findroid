@@ -311,6 +311,7 @@ class PlayerActivity : BasePlayerActivity() {
                 "speedselectiondialog",
             )
         }
+        initDefaultSpeed()
 
         danmuSwitch.setOnClickListener {
             danmuPreferences.isDanmuController = !danmuPreferences.isDanmuController;
@@ -465,5 +466,9 @@ class PlayerActivity : BasePlayerActivity() {
                 }
             }
         }
+    }
+
+    private fun initDefaultSpeed() {
+        viewModel.selectSpeed(appPreferences.playerSpeed)
     }
 }

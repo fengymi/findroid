@@ -48,6 +48,9 @@ object Constants {
     const val PREF_SORT_ORDER = "pref_sort_order"
     const val PREF_DISPLAY_EXTRA_INFO = "pref_display_extra_info"
 
+    // video setting
+    const val PREF_PLAYER_SPEED = "pre_video_speed"
+
     // caching
     const val DEFAULT_CACHE_SIZE = 20
 

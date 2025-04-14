@@ -25,9 +25,9 @@ class SpeedSelectionDialogFragment(
                     speedTexts.toTypedArray(),
                     speedNumbers.indexOf(viewModel.playbackSpeed),
                 ) { dialog, which ->
-                    viewModel.selectSpeed(
-                        speedNumbers[which],
-                    )
+                    val speed = speedNumbers[which]
+                    viewModel.selectSpeed(speed)
+                    viewModel.getAppPreferences().playerSpeed = speed
                     dialog.dismiss()
                 }
             builder.create()

@@ -35,7 +35,7 @@ import master.flame.danmaku.danmaku.parser.IDataSource;
 import timber.log.Timber;
 
 public class SimpleDanmuController extends AbstractDanmuControllerListener {
-    private Player player;
+    private final Player player;
 
     private final Map<String, PlayerItem> playerItemMap;
 
@@ -72,12 +72,8 @@ public class SimpleDanmuController extends AbstractDanmuControllerListener {
         playerItemMap = new HashMap<>();
         initDanmaku();
 
-        player.addListener(new Player.Listener() {
-            @Override
-            public void onIsPlayingChanged(boolean isPlaying) {
-                Player.Listener.super.onIsPlayingChanged(isPlaying);
-            }
-        });
+        this.player = player;
+        player.addListener(this);
     }
 
     public void setItems(PlayerItem[] items) {
@@ -113,9 +109,17 @@ public class SimpleDanmuController extends AbstractDanmuControllerListener {
 
 
     public void release() {
+        if (this.player != null) {
+            this.player.removeListener(this);
+        }
         this.danmakuView.release();
     }
 
+
+    @Override
+    protected Player getPlayer() {
+        return this.player;
+    }
 
     @Override
     protected void changePlayerItem(PlayerItem playerItem) {

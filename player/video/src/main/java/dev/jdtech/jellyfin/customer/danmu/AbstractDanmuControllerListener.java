@@ -24,7 +24,6 @@ public abstract class AbstractDanmuControllerListener implements Player.Listener
             ,Player.EVENT_MEDIA_METADATA_CHANGED
     };
 
-    private Player player;
     private boolean seek = false;
     @Override
     public void onEvents(@NonNull Player player, @NonNull Player.Events events) {
@@ -32,7 +31,6 @@ public abstract class AbstractDanmuControllerListener implements Player.Listener
         for (int i = 0; i < events.size(); i++) {
             eventList.add(events.get(i));
         }
-        this.player = player;
         Timber.i("AbstractDanmuControllerListener onEvents events.size=%d, eventList=%s", events.size(), JSON.toJSONString(eventList));
         // 播放状态发生变化
         if (events.contains(Player.EVENT_IS_PLAYING_CHANGED)) {
@@ -93,6 +91,7 @@ public abstract class AbstractDanmuControllerListener implements Player.Listener
         Timber.i("AbstractDanmuControllerListener onPlayWhenReadyChanged playWhenReady=%s, reason=%d", playWhenReady, reason);
         if (playWhenReady) {
             if (seek) {
+                Player player = getPlayer();
                 Timber.i("AbstractDanmuControllerListener onPlaybackStateChanged seek ContentPosition=%d, CurrentPosition=%d", player.getContentPosition(), player.getCurrentPosition());
                 seekTo(player.getCurrentPosition());
                 seek = false;
@@ -118,6 +117,7 @@ public abstract class AbstractDanmuControllerListener implements Player.Listener
         }
 
         // 开始播放
+        Player player = getPlayer();
         if (playbackState == Player.STATE_READY) {
             if (player != null && player.isPlaying()) {
                 if (seek) {
@@ -146,6 +146,8 @@ public abstract class AbstractDanmuControllerListener implements Player.Listener
     }
 
 //    protected abstract void playReady();
+
+    protected abstract Player getPlayer();
 
     protected abstract void changePlayerItem(PlayerItem currentItem);
 

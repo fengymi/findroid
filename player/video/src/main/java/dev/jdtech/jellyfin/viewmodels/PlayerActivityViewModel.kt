@@ -149,7 +149,6 @@ constructor(
         player.addListener(this)
         // 添加弹幕回调信息
         if (simpleDanmuController != null) {
-            player.addListener(simpleDanmuController!!)
             simpleDanmuController!!.setItems(items)
         }
 
@@ -225,7 +224,6 @@ constructor(
         currentMediaItemIndex = 0
         player.removeListener(this)
         if (simpleDanmuController != null) {
-            player.removeListener(simpleDanmuController!!)
             simpleDanmuController!!.release()
             simpleDanmuController = null
         }
@@ -485,6 +483,10 @@ constructor(
     override fun onIsPlayingChanged(isPlaying: Boolean) {
         super.onIsPlayingChanged(isPlaying)
         eventsChannel.trySend(PlayerEvents.IsPlayingChanged(isPlaying))
+    }
+
+    fun getAppPreferences(): AppPreferences {
+        return appPreferences
     }
 }
 
