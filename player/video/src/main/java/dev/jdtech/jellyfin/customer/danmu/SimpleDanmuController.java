@@ -74,6 +74,8 @@ public class SimpleDanmuController extends AbstractDanmuControllerListener {
 
         this.player = player;
         player.addListener(this);
+
+        DanmakuTimer.useVideoTime = true;
     }
 
     public void setItems(PlayerItem[] items) {
@@ -107,6 +109,9 @@ public class SimpleDanmuController extends AbstractDanmuControllerListener {
         return playerItemMap.get(itemId);
     }
 
+    public void setVideoTime(long videoTime) {
+        DanmakuTimer.videoTime = videoTime;
+    }
 
     public void release() {
         if (this.player != null) {

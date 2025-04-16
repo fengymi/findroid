@@ -59,6 +59,7 @@ public abstract class AbstractDanmuControllerListener implements Player.Listener
         // 播放速度变化
         if (events.contains(Player.EVENT_PLAYBACK_PARAMETERS_CHANGED)) {
             float speed = player.getPlaybackParameters().speed;
+//            Timber.i("AbstractDanmuControllerListener onEvents 修改播放速度 speed=%f", speed);
             setVideoSpeed(speed);
         }
 
@@ -70,21 +71,21 @@ public abstract class AbstractDanmuControllerListener implements Player.Listener
         release();
     }
 
-    @Override
-    public void onPositionDiscontinuity(int reason) {
-        Timber.i("AbstractDanmuControllerListener onPositionDiscontinuity newPosition, reason=%d", reason);
-//        seek = true;
-    }
-
-    @Override
-    public void onPositionDiscontinuity(@NonNull Player.PositionInfo oldPosition, @NonNull Player.PositionInfo newPosition, int reason) {
-        // seek跳转
-//        if (reason == Player.DISCONTINUITY_REASON_SEEK) {
+//    @Override
+//    public void onPositionDiscontinuity(int reason) {
+//        Timber.i("AbstractDanmuControllerListener onPositionDiscontinuity newPosition, reason=%d", reason);
+////        seek = true;
+//    }
 //
-//        }
-        Timber.i("AbstractDanmuControllerListener onPositionDiscontinuity newPosition contentPositionMs=%d, reason=%d", newPosition.contentPositionMs, reason);
-//        seekTo(newPosition.contentPositionMs);
-    }
+//    @Override
+//    public void onPositionDiscontinuity(@NonNull Player.PositionInfo oldPosition, @NonNull Player.PositionInfo newPosition, int reason) {
+//        // seek跳转
+////        if (reason == Player.DISCONTINUITY_REASON_SEEK) {
+////
+////        }
+//        Timber.i("AbstractDanmuControllerListener onPositionDiscontinuity newPosition contentPositionMs=%d, reason=%d", newPosition.contentPositionMs, reason);
+////        seekTo(newPosition.contentPositionMs);
+//    }
 
     @Override
     public void onPlayWhenReadyChanged(boolean playWhenReady, int reason) {

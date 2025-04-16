@@ -392,6 +392,9 @@ constructor(
         }
         val seconds = player.currentPosition / 1000.0
 
+        // 每秒更新视频时间
+        simpleDanmuController?.setVideoTime(player.currentPosition)
+
         val currentSegment = currentSegments.find { segment -> seconds in segment.startTime..<segment.endTime }
         Timber.tag("SegmentInfo").d("currentSegment: %s", currentSegment)
         _uiState.update { it.copy(currentSegment = currentSegment) }

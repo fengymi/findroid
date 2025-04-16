@@ -60,7 +60,7 @@
             app:summary="@string/player_gestures_seek_summary"
             app:title="@string/player_gestures_seek" />
         <SwitchPreferenceCompat
-            app:defaultValue="true"
+            app:defaultValue="false"
             app:dependency="pref_player_gestures"
             app:key="pref_player_gestures_chapter_skip"
             app:summary="@string/player_gestures_chapter_skip_summary"
