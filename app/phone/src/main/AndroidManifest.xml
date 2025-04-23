@@ -12,6 +12,7 @@
 
     <application
         android:name=".BaseApplication"
+        android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:enableOnBackInvokedCallback="true"
         android:fullBackupOnly="true"

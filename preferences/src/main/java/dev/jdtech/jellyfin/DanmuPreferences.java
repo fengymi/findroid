@@ -36,9 +36,9 @@ public class DanmuPreferences {
         this.sharedPreferences = sharedPreferences;
         // IDisplayer.DANMAKU_STYLE_STROKEN
         danmuStyle = sharedPreferences.getInt(DAN_MU_STYLE, 2);
-        danmuRows = sharedPreferences.getInt(DAN_MU_ROWS, 5);
+        danmuRows = sharedPreferences.getInt(DAN_MU_ROWS, 6);
         danmuController = sharedPreferences.getBoolean(DAN_MU_CONTROLLER, true);
-        danmuSpeed = sharedPreferences.getFloat(DAN_MU_SPEED, 1.2f);
+        danmuSpeed = sharedPreferences.getFloat(DAN_MU_SPEED, 1.0f);
         danmuFontSize = sharedPreferences.getFloat(DAN_MU_FONT_SIZE, 0.8f);
 
         try {

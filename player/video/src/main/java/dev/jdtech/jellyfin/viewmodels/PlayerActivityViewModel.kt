@@ -41,7 +41,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import master.flame.danmaku.ui.widget.DanmakuView
+import master.flame.danmaku.controller.IDanmakuView
 import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
@@ -137,7 +137,7 @@ constructor(
         }
     }
 
-    fun createDanmuControllerListener(danmuView: DanmakuView): SimpleDanmuController {
+    fun createDanmuControllerListener(danmuView: IDanmakuView): SimpleDanmuController {
         simpleDanmuController = SimpleDanmuController(danmuView, danmuPreferences, player, jellyfinRepository)
         return simpleDanmuController as SimpleDanmuController
     }
@@ -396,7 +396,7 @@ constructor(
         simpleDanmuController?.setVideoTime(player.currentPosition)
 
         val currentSegment = currentSegments.find { segment -> seconds in segment.startTime..<segment.endTime }
-        Timber.tag("SegmentInfo").d("currentSegment: %s", currentSegment)
+//        Timber.tag("SegmentInfo").d("currentSegment: %s", currentSegment)
         _uiState.update { it.copy(currentSegment = currentSegment) }
     }
 

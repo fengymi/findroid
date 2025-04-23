@@ -151,7 +151,11 @@ public class SimpleDanmuController extends AbstractDanmuControllerListener {
 
     @Override
     protected void seekTo(long newPosition) {
-        this.danmakuView.seekTo(newPosition);
+        if (this.danmakuView.isPrepared()) {
+            this.danmakuView.seekTo(newPosition);
+        } else {
+            startSeekPosition = newPosition;
+        }
     }
 
     private void initDanmaku() {
@@ -173,6 +177,7 @@ public class SimpleDanmuController extends AbstractDanmuControllerListener {
 
         DanmakuTimer.debug = BuildConfig.DEBUG;
         IDanmakuView mDanmakuView = danmakuView;
+        mDanmakuView.showFPS(DanmakuTimer.debug);
         if (mDanmakuView != null) {
             mDanmakuView.setCallback(new master.flame.danmaku.controller.DrawHandler.Callback() {
                 @Override
@@ -205,7 +210,7 @@ public class SimpleDanmuController extends AbstractDanmuControllerListener {
                     }
                 }
             });
-            mDanmakuView.enableDanmakuDrawingCache(true);
+            mDanmakuView.enableDanmakuDrawingCache(false);
             DanamakuAdapter danamakuAdapter = new DanamakuAdapter(mDanmakuView);
             mDanmakuContext.setCacheStuffer(new SpannedCacheStuffer(), danamakuAdapter); // 图文混排使用SpannedCacheStuffer
         }
