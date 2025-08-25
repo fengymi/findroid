@@ -39,7 +39,7 @@ media3-ffmpeg-decoder = "1.3.1+2"
 timber = "5.0.1"
 
 ## self
-danmakuRenderEngine = "dev~use_video_time-SNAPSHOT"
+danmakuRenderEngine = "v1.2.8"
 fastjson = "1.1.77.android_noneautotype"
 
 [libraries]
